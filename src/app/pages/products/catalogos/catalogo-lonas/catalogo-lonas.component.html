@@ -1,0 +1,98 @@
+<div class="row">
+    <div class="col-lg-12">
+      <mat-card class="cardWithShadow bg-light-primary">
+        <mat-card-content class="p-24">
+          <div class="d-flex w-100 justify-content-between align-items-center">
+            <mat-card-title>Catálogo • Lonas </mat-card-title>
+            <button mat-icon-button aria-label="Ir a catálogo" [routerLink]="['../']">
+              <i-tabler name="arrow-back-up" style="color: gray;"></i-tabler>
+            </button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  
+    <div class="col-lg-12">
+      <mat-card class="cardWithShadow">
+        <mat-card-content class="p-24">
+          <div class="row">
+            <div class="col-6">
+              <mat-form-field appearance="outline" style="margin-bottom: 0px;"
+              subscriptSizing="dynamic">
+                <input matInput type="text" name="search" placeholder="Buscar"
+                [(ngModel)]="searchString" 
+                (keyup)="applyFilter()"
+                />
+                <mat-icon matSuffix 
+                style="color: gray;"
+                >
+                  search
+                </mat-icon>
+              </mat-form-field>
+            </div>
+            <div class="col-6 text-right">
+              <button mat-raised-button color="primary" 
+              (click)="add()"
+              style="position: relative; top: 50%; transform: translateY(-50%);">Agregar</button>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  
+    <div class="col-lg-12">
+      <mat-card class="cardWithShadow">
+        <mat-card-content class="p-24">
+          <div class="row">
+            <div class="col-12">
+              <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="box-shadow: none;">
+  
+                <!--- Note that these columns can be defined in any order.
+                      The actual rendered columns are set as a property on the row definition" -->
+                <ng-container matColumnDef="tipo">
+                  <th mat-header-cell *matHeaderCellDef> Tipo </th>
+                  <td mat-cell *matCellDef="let element"> {{element.tipo}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="ancho">
+                    <th mat-header-cell *matHeaderCellDef> Ancho </th>
+                    <td mat-cell *matCellDef="let element"> {{element.ancho}} </td>
+                  </ng-container>
+
+                <ng-container matColumnDef="precioM2">
+                  <th mat-header-cell *matHeaderCellDef> Precio M2</th>
+                  <td mat-cell *matCellDef="let element"> {{element.precioM2 | currency:'MXN'}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="precioM2mayoreo">
+                    <th mat-header-cell *matHeaderCellDef> Precio M2 Mayoreo</th>
+                    <td mat-cell *matCellDef="let element"> {{element.precioM2mayoreo | currency:'MXN'}} </td>
+                  </ng-container>
+  
+                <ng-container matColumnDef="acciones">
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td mat-cell *matCellDef="let element">
+                    <button mat-icon-button aria-label="Editar" (click)="edit(element)">
+                      <i-tabler
+                        class="d-flex"
+                        name="edit"
+                      ></i-tabler>
+                    </button>
+                    <button mat-icon-button aria-label="Eliminar" (click)="delete(element)">
+                      <i-tabler
+                        class="d-flex"
+                        name="trash"
+                      ></i-tabler>
+                    </button>
+                  </td>
+                </ng-container>
+  
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              </table>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>

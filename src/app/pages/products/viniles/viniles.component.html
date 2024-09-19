@@ -1,0 +1,109 @@
+<div class="row">
+    <!-- --------------------------------------------------------------------------- -->
+    <!-- Sales Overview -->
+    <!-- --------------------------------------------------------------------------- -->
+    <div class="col-lg-7">
+      <mat-card class="cardWithShadow">
+        <mat-card-content class="p-24">
+          <div class="d-flex w-100 justify-content-between align-items-center" style="margin-bottom: 30px;">
+            <mat-card-title>Viniles</mat-card-title>
+            <ng-template [ngIf]="user">
+              <button mat-icon-button aria-label="Ir a catálogo" [routerLink]="['./catalogo']">
+                <i-tabler name="file-spreadsheet" style="color: gray;"></i-tabler>
+              </button>
+            </ng-template>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">
+                Tipo
+            </mat-label>
+            <mat-form-field class="theme-select"  class="w-100" color="primary" appearance="outline">
+                <mat-select [(value)]="tipo" (selectionChange)="onTipoChanged()">
+                  <mat-option *ngFor="let tipo of tipos" [value]="tipo">
+                    {{ tipo }}
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">
+                Subtipo
+            </mat-label>
+            <mat-form-field class="theme-select"  class="w-100" color="primary" appearance="outline">
+                <mat-select [(value)]="subtipo" (selectionChange)="onSubtipoChanged()">
+                  <mat-option *ngFor="let subtipo of subtipos" [value]="subtipo">
+                    {{ subtipo }}
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">
+                Ancho
+            </mat-label>
+            <mat-form-field class="theme-select"  class="w-100" color="primary" appearance="outline">
+                <mat-select [(value)]="ancho" (selectionChange)="onAnchoChanged()">
+                  <mat-option *ngFor="let ancho of anchos" [value]="ancho">
+                    {{ ancho }}
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
+            </div>
+            <div class="col-6">
+              <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">
+                Base (metros)
+            </mat-label>
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <input type="number" name="base" [(ngModel)]="base" matInput (keyup)="onCalcular()" />
+            </mat-form-field>
+            <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">
+                Altura (metros)
+            </mat-label>
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <input type="number" name="altura" [(ngModel)]="altura" matInput (keyup)="onCalcular()" />
+            </mat-form-field>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-lg-5">
+      <mat-card class="cardWithShadow">
+        <div class="row">
+          <div class="col-lg-6">
+            <mat-card-header class="d-flex align-items-center p-x-24">
+              <mat-card-title>Precio</mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="m-b-32 p-x-24">
+              <h4 class="mat-headline-5">{{(precio? precio : 0) | currency:'MXN'}}</h4>
+            </mat-card-content>
+          </div>
+          <div class="col-lg-6">
+            <mat-card-content style="display: flex; align-items: center; flex-direction: column;">
+              <mat-form-field appearance="outline" color="primary" class="w-100">
+                <mat-label>Cantidad</mat-label>
+                <input type="number" name="cantidad" [(ngModel)]="cantidad" matInput/>
+              </mat-form-field>
+              <button [disabled]="!precio" class="w-100" style="margin-top: -12px;" (click)="onAgregarProductoACotizacion(false)" mat-raised-button color="primary">Agregar a cotización</button>
+            </mat-card-content>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6">
+            <mat-card-header class="d-flex align-items-center p-x-24">
+              <mat-card-title>Precio mayoreo</mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="m-b-32 p-x-24">
+              <h4 class="mat-headline-5">{{(precioMayoreo ? precioMayoreo : 0) | currency:'MXN'}}</h4>
+            </mat-card-content>
+          </div>
+          <div class="col-lg-6">
+            <mat-card-content style="display: flex; align-items: center; flex-direction: column;">
+              <mat-form-field appearance="outline" color="primary" class="w-100">
+                <mat-label>Cantidad</mat-label>
+                <input type="number" name="cantidad" [(ngModel)]="cantidadMayoreo" matInput/>
+              </mat-form-field>
+              <button [disabled]="!precioMayoreo" class="w-100" style="margin-top: -12px;" (click)="onAgregarProductoACotizacion(true)" mat-raised-button color="primary">Agregar a cotización</button>
+            </mat-card-content>
+          </div>
+        </div>
+      </mat-card>
+      </div>
+  </div>

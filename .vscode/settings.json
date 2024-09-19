@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/5a938cc3-4960-4ac3-9262-ab01d27f6cde/resourceGroups/CimResourceGroup/providers/Microsoft.Web/sites/cim-cotizador",
+    "appService.deploySubpath": "dist"
+}

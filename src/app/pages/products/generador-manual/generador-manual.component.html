@@ -1,0 +1,204 @@
+<div style="margin-right: 18px;">
+    <div id="cotizacion">
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6 text-center">
+                <h1>CENTRO DE IMPRESIONES MEXICO</h1>
+                <h2>ARTURO TEJADA MIRANDA</h2>
+                <h3>R.F.C TEMA641215853</h3>
+                <h3>JUSTO SIERRA 426, COL. NUEVA</h3>
+                <h3>MEXICALI, BAJA CALIFORNIA C.P. 21100 TEL. 686 554 7201</h3>
+            </div>
+            <div class="col-3">
+            </div>
+        </div>
+        <div class="row m-x-2">
+            <div class="col-12">
+                <div class="d-flex w-100">
+                    <h3 *ngIf="cotizacion.numero>0" class="m-l-0">Cotización #{{cotizacion.numero}}</h3>
+                    <h3 *ngIf="cotizacion.numero<=0" class="m-l-0 text-success">Nueva cotización</h3>
+                    <div class="m-l-auto">
+
+                        <h3 class="m-l-0" *ngIf="cotizacion.numero<=0">{{fechaActual}}</h3>
+                        <h3 class="m-l-0" *ngIf="cotizacion.numero>0">{{cotizacion.fecha | date : 'longDate'}}</h3>
+                    </div>
+                  </div>
+            </div>
+            <div class="col-12">
+                <!--if modoEdicion is true-->
+                <div *ngIf="modoEdicion">
+                    <mat-form-field appearance="outline" class="w-100" color="primary">
+                        <input type="text" name="nombreCliente" [(ngModel)]="cotizacion.nombreCliente" matInput placeholder="Nombre del cliente" />
+                    </mat-form-field>
+                </div>
+                <!--else-->
+                <div *ngIf="!modoEdicion">
+                    <h3>{{cotizacion.nombreCliente}}</h3>
+                </div>
+            </div>
+            <div class="col-12">
+                <table mat-table [dataSource]="cotizacion.productos" class="mat-elevation-z8" class="w-100">
+        
+                    <!--- Note that these columns can be defined in any order.
+                          The actual rendered columns are set as a property on the row definition" -->
+                  
+                    <ng-container matColumnDef="producto">
+                      <th mat-header-cell *matHeaderCellDef> Producto </th>
+                      <td mat-cell *matCellDef="let element"> {{element.producto}} </td>
+                    </ng-container>
+        
+                    <ng-container matColumnDef="medida">
+                        <th mat-header-cell *matHeaderCellDef> Medida </th>
+                        <td mat-cell *matCellDef="let element"> {{element.medida}} </td>
+                    </ng-container>
+        
+                    <ng-container matColumnDef="material">
+                        <th mat-header-cell *matHeaderCellDef> Material </th>
+                        <td mat-cell *matCellDef="let element"> {{element.material}} </td>
+                    </ng-container>
+        
+                    <ng-container matColumnDef="precio">
+                        <th mat-header-cell *matHeaderCellDef> Precio </th>
+                        <td mat-cell *matCellDef="let element"> {{element.precio | currency:'MXN' }} </td>
+                    </ng-container>
+        
+                    <ng-container matColumnDef="cantidad">
+                        <th mat-header-cell *matHeaderCellDef> Cant. </th>
+                        <td mat-cell *matCellDef="let element"> {{element.cantidad}} </td>
+                    </ng-container>
+        
+                    <ng-container matColumnDef="importe">
+                        <th mat-header-cell *matHeaderCellDef> Importe </th>
+                        <td mat-cell *matCellDef="let element"> {{element.importe | currency:'MXN' }} </td>
+                    </ng-container>
+                    <!-- add column for actions-->
+                    <ng-container matColumnDef="acciones">
+                        <th mat-header-cell *matHeaderCellDef> Acciones </th>
+                        <td mat-cell *matCellDef="let element">
+                            <button mat-mini-fab (click)="eliminarProducto(element.id)" aria-label="Eliminar" class="danger">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                            <button mat-mini-fab (click)="editarProducto(element.id)" aria-label="Editar" class="primary">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container>
+                  
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                  </table>
+            </div>
+        </div>
+        <div class="row m-x-2" *ngIf="modoEdicion">
+            <div class="col-12 text-center">
+                <button (click)="toggleAgregarProducto()" mat-mini-fab class="success" aria-label="Agregar producto">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </div>
+            <div class="col-12" style="margin-top: 16px;" *ngIf="modoAgregarProducto">
+                <mat-form-field appearance="outline" class="w-20" color="primary">
+                    <mat-label>Producto</mat-label>
+                    <input type="text" name="nuevoProducto" [(ngModel)]="nuevoProducto" matInput/>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="w-20" color="primary">
+                    <mat-label>Medida</mat-label>
+                    <input type="text" name="nuevaMedida" [(ngModel)]="nuevaMedida" matInput/>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="w-20" color="primary">
+                    <mat-label>Material</mat-label>
+                    <input type="text" name="nuevoMaterial" [(ngModel)]="nuevoMaterial" matInput/>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="w-15" color="primary">
+                    <mat-label>Precio</mat-label>
+                    <input type="number" name="nuevoPrecio" [(ngModel)]="nuevoPrecio" matInput/>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="w-15" color="primary">
+                    <mat-label>Cantidad</mat-label>
+                    <input type="number" name="nuevaCantidad" [(ngModel)]="nuevaCantidad" matInput/>
+                </mat-form-field>
+                <button (click)="agregarProducto()" class="w-10" style="height: 56px;" mat-raised-button color="primary">Agregar</button>
+            </div>
+        </div>
+        
+        <div class="row m-x-2" style="margin-top: 26px;">
+            <div class="col-6 d-flex" style="align-items: end;">
+                <div>
+                    <p>ABIERTO DE 8:00AM. A 6:00PM. DE LUNES A VIERNES.</p>
+                    <p>- Esta cotización pierde su vigencia a los 20 días de haber sido emitida.</p>
+                    <p>- Esta cotización no tiene valor fiscal.</p>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="d-flex w-100">
+                    <div class="m-l-auto">
+                        <div class="m-l-auto">
+                            <mat-list style="width: 400px;">
+                                <mat-list-item>
+                                    <div class="d-flex w-100">SUBTOTAL
+                                        <div class="m-l-auto">{{cotizacion.subtotal | currency:'MXN' }}</div>
+                                    </div>
+                                </mat-list-item>
+                                <mat-list-item>
+                                    <div class="d-flex w-100">IMPUESTOS
+                                        <div class="m-l-auto">{{cotizacion.impuestos | currency:'MXN' }}</div>
+                                    </div>
+                                </mat-list-item>
+                                <mat-list-item *ngIf="!modoEdicion">
+                                    <div class="d-flex w-100">DESCUENTO
+                                        <div class="m-l-auto">{{cotizacion.descuento | currency:'MXN' }}</div>
+                                    </div>
+                                </mat-list-item>
+                                <mat-list-item *ngIf="modoEdicion" style="padding-top: 56px; padding-bottom: 36px;">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            DESCUENTO
+                                        </div>
+                                        <div class="col-6">
+                                            <mat-form-field appearance="outline" class="w-100" color="primary">
+                                                <input type="number" (keyup)="recalcularSubtotal()" name="descuento" [(ngModel)]="cotizacion.descuento" matInput/>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </mat-list-item>
+                                
+                                <mat-divider></mat-divider>
+                                <mat-list-item>
+                                    <div class="d-flex w-100"><h3>TOTAL</h3>
+                                        <div class="m-l-auto"><h3>{{cotizacion.total | currency:'MXN' }}</h3></div>
+                                    </div>
+                                </mat-list-item>
+                              </mat-list>
+                        </div>
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="floating-buttons">
+    <div style="display: flex; flex-direction: column;">
+        <button class="success" *ngIf="cotizacion.numero>0" mat-fab matTooltip="Nueva cotización" matTooltipPosition="left" (click)="empezarNuevaCotizacion()" aria-label="Nueva cotización">
+            <mat-icon>add</mat-icon>
+        </button>
+        <button *ngIf="!modoEdicion" 
+        matTooltip="Editar" matTooltipPosition="left" mat-fab color="primary" (click)="toggleEdicion()" aria-label="Editar">
+            <mat-icon>edit</mat-icon>
+        </button>
+        <button *ngIf="modoEdicion" 
+        matTooltip="Terminar edición" matTooltipPosition="left" style="margin-bottom: 4px;" mat-fab class="success" (click)="toggleEdicion()" aria-label="Editar">
+            <mat-icon>check</mat-icon>
+        </button>
+        <button mat-fab color="accent" 
+        matTooltip="Descargar PDF" matTooltipPosition="left" [disabled]="modoEdicion" (click)="downloadPDF()" aria-label="Imprimir">
+            <mat-icon>printer</mat-icon>
+        </button>
+        <button mat-fab color="primary" matTooltip="Guardar" matTooltipPosition="left" [disabled]="disableBotonGuardar" *ngIf="!modoEdicion && user" (click)="guardarCotizacion()" aria-label="Guardar">
+            <mat-icon>save</mat-icon>
+        </button>
+        <button [routerLink]="['/productos/cotizaciones']"
+        mat-fab color="accent" matTooltip="Cotizaciones" matTooltipPosition="left" *ngIf="user" aria-label="Guardar">
+            <mat-icon>list</mat-icon>
+        </button>
+    </div>
+</div>

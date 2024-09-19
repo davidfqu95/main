@@ -1,0 +1,54 @@
+<h1 mat-dialog-title>{{operacion}}</h1>
+
+<div mat-dialog-content style="padding-bottom: 0px;" >
+  <form [formGroup]="formInstance">
+    <div style="margin-top: 8px;">
+      <mat-form-field class="w-100" appearance="outline">
+        <mat-label>Tipo</mat-label>
+        <input matInput type="text" 
+        name="tipo" formControlName="tipo">
+        <mat-error *ngIf="formInstance.controls['producto']?.errors">Requerido
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div style="margin-top: 8px;">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Subtipo</mat-label>
+          <input matInput type="text" 
+          name="subtipo" formControlName="subtipo">
+        </mat-form-field>
+      </div>
+
+    <div class="mt-5">
+      <mat-form-field class="w-100" appearance="outline">
+        <mat-label>Ancho</mat-label>
+        <input matInput type="text" name="ancho" formControlName="ancho" />
+      </mat-form-field>
+    </div>
+
+    <div class="mt-5">
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Precio m2</mat-label>
+            <input matInput type="number" name="precioM2" formControlName="precioM2" />
+            <mat-error *ngIf="formInstance.controls['precioM2']?.errors">Requerido
+            </mat-error>
+          </mat-form-field>
+    </div>
+    <div class="mt-5">
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Precio m2 Mayoreo</mat-label>
+            <input matInput type="number" name="precioM2mayoreo" formControlName="precioM2mayoreo" />
+          </mat-form-field>
+    </div>
+  </form>
+</div>
+
+<div mat-dialog-actions style="margin-bottom: 8px; margin-left: 8px; margin-right: 8px;">
+  <button mat-raised-button color="primary" 
+    [disabled]="formInstance.invalid"
+  (click)="save()"
+    cdkFocusInitial>Aceptar</button>
+  <button mat-raised-button mat-dialog-close>Cancelar</button>
+
+</div>

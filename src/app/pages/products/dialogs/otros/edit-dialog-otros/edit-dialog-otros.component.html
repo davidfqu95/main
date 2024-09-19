@@ -1,0 +1,46 @@
+<h1 mat-dialog-title>{{operacion}}</h1>
+
+<div mat-dialog-content style="padding-bottom: 0px;" >
+  <form [formGroup]="formInstance">
+    <div style="margin-top: 8px;">
+      <mat-form-field class="w-100" appearance="outline">
+        <mat-label>Producto</mat-label>
+        <input matInput type="text" 
+        name="producto" formControlName="producto">
+        <mat-error *ngIf="formInstance.controls['producto']?.errors">Requerido
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="mt-5">
+      <mat-form-field class="w-100" appearance="outline">
+        <mat-label>Tipo</mat-label>
+        <input matInput type="text" name="tipo" formControlName="tipo" />
+      </mat-form-field>
+    </div>
+
+    <div class="mt-5">
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Subtipo</mat-label>
+            <input matInput type="text" name="tipo2" formControlName="tipo2" />
+          </mat-form-field>
+    </div>
+    <div class="mt-5">
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Precio</mat-label>
+            <input matInput type="number" name="precio" formControlName="precio" />
+            <mat-error *ngIf="formInstance.controls['precio']?.errors">Requerido
+            </mat-error>
+          </mat-form-field>
+    </div>
+  </form>
+</div>
+
+<div mat-dialog-actions style="margin-bottom: 8px; margin-left: 8px; margin-right: 8px;">
+  <button mat-raised-button color="primary" 
+    [disabled]="formInstance.invalid"
+  (click)="save()"
+    cdkFocusInitial>Aceptar</button>
+  <button mat-raised-button mat-dialog-close>Cancelar</button>
+
+</div>

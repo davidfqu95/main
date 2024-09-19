@@ -1,0 +1,8 @@
+{
+  "projectName": "cim-cotizador",
+  "meta": {
+    "type": "frontend"
+  },
+  "packageManager": "npm",
+  "hash": "cca10149"
+}

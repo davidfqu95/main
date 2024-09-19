@@ -1,0 +1,40 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.w-15 {
+    width: 15%;
+  }
+  .w-10 {
+    width: 10%;
+  }
+
+.success {
+    background-color:#13deb9 !important;
+}
+
+.text-success {
+    color:#13deb9 !important;
+}
+
+.warning {
+    background-color:#ffae1f;
+}
+
+.text-warning {
+    color:#ffae1f;
+}
+.danger {
+    background-color:#c93900 !important;
+}
+
+.danger-error {
+    color:#c93900 !important;
+}
+
+.floating-buttons {
+    position: fixed;
+    bottom: 8px;
+    right: 30px;
+    z-index: 1000;
+}
